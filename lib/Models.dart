@@ -14,3 +14,20 @@ class Breeds {
     return Breeds(breeds: allBreeds);
   }
 }
+
+class DogImages {
+  final List<String> urls;
+
+  DogImages({this.urls});
+
+  factory DogImages.fromJson(Map<String, dynamic> json) {
+    var result = json['message'];
+    List<String> imageURLs = [];
+
+    for (var url in result) {
+      imageURLs.add(url);
+    }
+
+    return DogImages(urls: imageURLs);
+  }
+}
