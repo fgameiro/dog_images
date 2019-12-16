@@ -1,3 +1,4 @@
+import 'package:dog_images/CustomText.dart';
 import 'package:dog_images/api.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -11,9 +12,10 @@ class ImagesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(breed),
+        title: CustomText(text: breed),
       ),
       body: getImages(),
+      backgroundColor: Color.fromRGBO(15, 76, 129, 1.0),
     );
   }
 
