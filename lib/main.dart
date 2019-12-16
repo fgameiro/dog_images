@@ -1,3 +1,4 @@
+import 'package:dog_images/ImagesList.dart';
 import 'package:flutter/material.dart';
 import 'Api.dart';
 
@@ -22,11 +23,11 @@ class FutureList extends StatelessWidget {
       appBar: AppBar(
         title: Text("Pick a dog breed!"),
       ),
-      body: projectWidget(),
+      body: futureList(),
     );
   }
 
-  Widget projectWidget() {
+  Widget futureList() {
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
@@ -36,24 +37,32 @@ class FutureList extends StatelessWidget {
 
         return createListView(context, snapshot);
       },
-      future: API.getAllBreedsAlternative(),
+      future: API.getAllBreeds(),
     );
   }
 
   Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
-    var breeds = snapshot.data.breeds;
-    return new ListView.builder(
+    var breeds = snapshot.data?.breeds;
+    if (breeds == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return ListView.builder(
       itemCount: breeds.length,
       itemBuilder: (BuildContext context, int index) {
-        return new Column(
-          children: <Widget>[
-            new ListTile(
-              title: new Text(breeds[index]),
-            ),
-            new Divider(
-              height: 2.0,
-            ),
-          ],
+        final String breed = breeds[index];
+        return ListTile(
+          title: Text(breed),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ImagesList(
+                          breed: breed,
+                        )));
+          },
         );
       },
     );
